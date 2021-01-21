@@ -21,6 +21,7 @@ import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -89,8 +90,9 @@ public class PemUtils {
         return PemUtils.getPublicKey(bytes, algorithm);
     }
 
-    public static PrivateKey readPrivateKeyFromFile(String filepath, String algorithm) throws IOException {
-        byte[] bytes = PemUtils.parsePEMFile(new File(filepath));
+    public static PrivateKey readPrivateKeyFromFile( String algorithm) throws IOException {
+    	File resource = new ClassPathResource("icici_privateKey.txt").getFile();
+        byte[] bytes = PemUtils.parsePEMFile(resource);
         return PemUtils.getPrivateKey(bytes, algorithm);
     }
     

@@ -53,9 +53,6 @@ public class TruliooApiServiceImpl implements TruliooApiService {
 	@Value("${app.publickey.path}")
 	String publicKeyPath;
 
-	@Value("${app.privatekey.path}")
-	String privateKeyPath;
-
 	@Value("${app.username}")
 	String userName;
 
@@ -176,9 +173,13 @@ public class TruliooApiServiceImpl implements TruliooApiService {
 		 */
 
 		byte[] encryptedMsg = Base64.getDecoder().decode(b64EncryptedMsg);
-		Key key = PemUtils.readPrivateKeyFromFile(privateKeyPath, "RSA");
+		Key key = PemUtils.readPrivateKeyFromFile( "RSA");
 		cipher.init(Cipher.DECRYPT_MODE, key);
 		byte[] decryptedMsg = cipher.doFinal(encryptedMsg);
 		return decryptedMsg;
+	}
+
+	public TruliooApiServiceImpl() {
+		
 	}
 }
