@@ -91,7 +91,7 @@ public class PemUtils {
     }
 
     public static PrivateKey readPrivateKeyFromFile( String algorithm) throws IOException {
-    	File resource = new ClassPathResource("icici_privateKey.txt").getFile();
+    	File resource = new ClassPathResource("privateKey.txt").getFile();
         byte[] bytes = PemUtils.parsePEMFile(resource);
         return PemUtils.getPrivateKey(bytes, algorithm);
     }

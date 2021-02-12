@@ -13,6 +13,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -37,7 +39,7 @@ public class TruliooApiController {
 	@Autowired
 	ResponseModel responseModel;
 	
-	
+	Logger logger = LoggerFactory.getLogger(TruliooApiController.class);
 	
 	@GetMapping(value="/getRequestPacket",produces="application/json")
 	public ResponseEntity<ResponseModel> getRequestPacket(){
@@ -47,6 +49,7 @@ public class TruliooApiController {
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException
 				| CertificateException | InvalidKeySpecException | IOException e) {
+			logger.info(e.getMessage());
 			responseModel.setErrorMessage(e.getMessage());
 		}
 		return ResponseEntity.ok().body(responseModel);
@@ -60,6 +63,7 @@ public class TruliooApiController {
 		} catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
 				| InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException
 				| CertificateException | InvalidKeySpecException | IOException e) {
+			logger.info(e.getMessage());
 			responseModel.setErrorMessage(e.getMessage());
 		}
 		
@@ -75,7 +79,8 @@ public class TruliooApiController {
 		} catch (InvalidKeyException | UnrecoverableKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 				| CertificateException | IllegalBlockSizeException | InvalidKeySpecException | BadPaddingException
 				| KeyStoreException | InvalidAlgorithmParameterException | IOException e) {
-			// TODO Auto-generated catch block
+			logger.info(e.getMessage());
+			e.printStackTrace();
 			responseModel.concat(e.getMessage());
 		}
 		return ResponseEntity.ok().body(responseModel);
